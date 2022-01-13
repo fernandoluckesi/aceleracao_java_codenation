@@ -1,4 +1,20 @@
 package br.com.curso.usuarios;
 
-public interface UsuarioAutorizavel {
+import br.com.curso.alunos.ValidationException;
+
+import java.util.List;
+
+public abstract class UsuarioAutorizavel extends  Usuario {
+    public UsuarioAutorizavel(String login, String cpf, String nome) throws ValidationException {
+        super(login, cpf, nome);
+    }
+
+    public boolean temAutorizacao() {
+        List<String> autorizacoes = getAutorizacoes();
+        return autorizacoes.contains("ADMIN") || verificarAutorizacaoLogin();
+    }
+
+    protected abstract  List<String> getAutorizacoes();
+
+    protected  abstract  boolean verificarAutorizacaoLogin();
 }
